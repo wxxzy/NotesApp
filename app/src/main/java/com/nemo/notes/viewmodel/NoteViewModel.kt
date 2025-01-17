@@ -20,6 +20,10 @@ class NoteViewModel @Inject constructor(
         repository.insert(note)
     }
 
+    fun update(note: Note) = viewModelScope.launch {
+        repository.update(note)
+    }
+
     fun addNote(note: Note) {
         viewModelScope.launch {
             repository.insert(note)

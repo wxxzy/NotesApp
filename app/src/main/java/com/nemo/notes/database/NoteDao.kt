@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import com.nemo.notes.model.Note
 import kotlinx.coroutines.flow.Flow
 
@@ -14,6 +15,9 @@ interface NoteDao {
 
     @Insert
     suspend fun insert(note: Note): Long
+
+    @Update
+    suspend fun update(note: Note): Int
 
     @Query("DELETE FROM notes WHERE id = :noteId")
     suspend fun delete(noteId: Long): Int
