@@ -8,7 +8,7 @@ import androidx.room.TypeConverters
 import com.nemo.notes.model.Note
 
 @Database(entities = [Note::class], version = 1, exportSchema = false)
-@TypeConverters(DateConverter::class)
+@TypeConverters(DateConverter::class, Converters::class)
 abstract class NoteDatabase : RoomDatabase() {
 
     abstract fun noteDao(): NoteDao

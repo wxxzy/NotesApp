@@ -15,4 +15,7 @@ class NoteRepository @Inject constructor(
     suspend fun update(note: Note) = noteDao.update(note)
 
     suspend fun delete(noteId: Long) = noteDao.delete(noteId)
+
+    // 新增搜索方法
+    fun searchNotes(query: String): Flow<List<Note>> = noteDao.searchNotes("%$query%")
 }
