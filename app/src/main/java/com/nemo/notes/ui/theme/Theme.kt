@@ -6,10 +6,13 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.material3.Typography
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.nemo.notes.viewmodel.ThemeViewModel
 
 // 颜色定义, 用于暗色主题
 private val DarkColorScheme = darkColorScheme(
@@ -42,14 +45,19 @@ private val typography = Typography(
 // 传入darkTheme参数, 用于判断当前主题
 @Composable
 fun NotesAppTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    themeViewModel: ThemeViewModel,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme
+    val themeMode by themeViewModel.themeMode.collectAsState()
+
+    val isDarkTheme = when (themeMode) {
+        ThemeMode.LIGHT -> false
+        ThemeMode.DARK -> true
+        ThemeMode.SYSTEM -> isSystemInDarkTheme()
+    }
 
     MaterialTheme(
-        colorScheme = colorScheme,
-        typography = typography,
+        colorScheme = if (isDarkTheme) DarkColorScheme else LightColorScheme,
         content = content
     )
 }
